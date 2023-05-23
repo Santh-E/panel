@@ -13,6 +13,7 @@ import useSWR from 'swr';
 import { PaginatedResult } from '@/api/http';
 import Pagination from '@/components/elements/Pagination';
 import { useLocation } from 'react-router-dom';
+import lang from '../../../../lang.json';
 
 export default () => {
     const { search } = useLocation();
@@ -51,16 +52,16 @@ export default () => {
     return (
         <PageContentBlock title={'Dashboard'} showFlashKey={'dashboard'}>
             {rootAdmin && (
-                <div css={tw`mb-2 flex justify-end items-center`}>
-                    <p css={tw`uppercase text-xs text-neutral-400 mr-2`}>
-                        {showOnlyAdmin ? "Showing others' servers" : 'Showing your servers'}
-                    </p>
-                    <Switch
-                        name={'show_all_servers'}
-                        defaultChecked={showOnlyAdmin}
+            <div css={tw`mb-2 flex justify-end items-center`}>
+                <p css={tw`uppercase text-xs text-neutral-400 mr-2`}>
+                    {showOnlyAdmin ? lang.showing_others_servers : lang.showing_your_servers }
+                </p>
+                <Switch
+                    name={'show_all_servers'}
+                    defaultChecked={showOnlyAdmin}
                         onChange={() => setShowOnlyAdmin((s) => !s)}
-                    />
-                </div>
+                />
+            </div>
             )}
             {!servers ? (
                 <Spinner centered size={'large'} />
@@ -74,8 +75,8 @@ export default () => {
                         ) : (
                             <p css={tw`text-center text-sm text-neutral-400`}>
                                 {showOnlyAdmin
-                                    ? 'There are no other servers to display.'
-                                    : 'There are no servers associated with your account.'}
+                                    ? lang.there_are_no_other_servers_to_display
+                                    : lang.there_are_no_servers_associated_with_your_account}
                             </p>
                         )
                     }

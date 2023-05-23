@@ -10,6 +10,7 @@ import { FlashStore } from '@/state/flashes';
 import Field from '@/components/elements/Field';
 import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
+import lang from '../../../../lang.json';
 
 interface Values {
     code: string;
@@ -27,7 +28,7 @@ const LoginCheckpointContainer = () => {
     const [isMissingDevice, setIsMissingDevice] = useState(false);
 
     return (
-        <LoginFormContainer title={'Device Checkpoint'} css={tw`w-full flex`}>
+        <LoginFormContainer title={lang.device_checkpoint} css={tw`w-full flex`}>
             <div css={tw`mt-6`}>
                 <Field
                     light

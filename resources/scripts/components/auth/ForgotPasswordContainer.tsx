@@ -12,6 +12,7 @@ import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 import Reaptcha from 'reaptcha';
 import useFlash from '@/plugins/useFlash';
+import lang from '../../../../lang.json';
 
 interface Values {
     email: string;
@@ -67,47 +68,45 @@ export default () => {
             initialValues={{ email: '' }}
             validationSchema={object().shape({
                 email: string()
-                    .email('A valid email address must be provided to continue.')
-                    .required('A valid email address must be provided to continue.'),
+                    .email(lang.a_valid_email_must_be_provided)
+                    .required(lang.a_valid_email_must_be_provided),
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer title={'Request Password Reset'} css={tw`w-full flex`}>
+                <LoginFormContainer title={lang.request_pass_reset} css={tw`w-full flex`}>
                     <Field
                         light
-                        label={'Email'}
-                        description={
-                            'Enter your account email address to receive instructions on resetting your password.'
-                        }
+                        label={lang.email}
+                        description={lang.enter_account_email}
                         name={'email'}
                         type={'email'}
                     />
                     <div css={tw`mt-6`}>
                         <Button type={'submit'} size={'xlarge'} disabled={isSubmitting} isLoading={isSubmitting}>
-                            Send Email
+                            {lang.send_email}
                         </Button>
                     </div>
                     {recaptchaEnabled && (
-                        <Reaptcha
-                            ref={ref}
-                            size={'invisible'}
-                            sitekey={siteKey || '_invalid_key'}
-                            onVerify={(response) => {
-                                setToken(response);
-                                submitForm();
-                            }}
-                            onExpire={() => {
-                                setSubmitting(false);
-                                setToken('');
-                            }}
-                        />
+                    <Reaptcha
+                        ref={ref}
+                        size={'invisible'}
+                        sitekey={siteKey || '_invalid_key'}
+                        onVerify={(response) => {
+                            setToken(response);
+                            submitForm();
+                        }}
+                        onExpire={() => {
+                            setSubmitting(false);
+                            setToken('');
+                        }}
+                    />
                     )}
                     <div css={tw`mt-6 text-center`}>
                         <Link
                             to={'/auth/login'}
                             css={tw`text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
                         >
-                            Return to Login
+                            {lang.return_to_login}
                         </Link>
                     </div>
                 </LoginFormContainer>

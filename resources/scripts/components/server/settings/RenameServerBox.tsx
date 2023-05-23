@@ -11,6 +11,7 @@ import { ApplicationStore } from '@/state';
 import { httpErrorToHuman } from '@/api/http';
 import { Button } from '@/components/elements/button/index';
 import tw from 'twin.macro';
+import lang from '../../../../../lang.json';
 
 interface Values {
     name: string;
@@ -20,12 +21,12 @@ const RenameServerBox = () => {
     const { isSubmitting } = useFormikContext<Values>();
 
     return (
-        <TitledGreyBox title={'Change Server Name'} css={tw`relative`}>
+        <TitledGreyBox title={lang.rename_server} css={tw`relative`}>
             <SpinnerOverlay visible={isSubmitting} />
             <Form css={tw`mb-0`}>
-                <Field id={'name'} name={'name'} label={'Server Name'} type={'text'} />
+                <Field id={'name'} name={'name'} label={lang.rename_server_label} type={'text'} />
                 <div css={tw`mt-6 text-right`}>
-                    <Button type={'submit'}>Save</Button>
+                    <Button type={'submit'}>{lang.rename_server_save}</Button>
                 </div>
             </Form>
         </TitledGreyBox>

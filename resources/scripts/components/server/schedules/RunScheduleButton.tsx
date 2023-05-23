@@ -5,6 +5,7 @@ import triggerScheduleExecution from '@/api/server/schedules/triggerScheduleExec
 import { ServerContext } from '@/state/server';
 import useFlash from '@/plugins/useFlash';
 import { Schedule } from '@/api/server/schedules/getServerSchedules';
+import lang from '../../../../../lang.json';
 
 const RunScheduleButton = ({ schedule }: { schedule: Schedule }) => {
     const [loading, setLoading] = useState(false);
@@ -37,7 +38,7 @@ const RunScheduleButton = ({ schedule }: { schedule: Schedule }) => {
                 disabled={schedule.isProcessing}
                 onClick={onTriggerExecute}
             >
-                Run Now
+                {lang.run_now}
             </Button>
         </>
     );

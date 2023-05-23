@@ -19,6 +19,7 @@ import Label from '@/components/elements/Label';
 import Input from '@/components/elements/Input';
 import GreyRowBox from '@/components/elements/GreyRowBox';
 import CopyOnClick from '@/components/elements/CopyOnClick';
+import lang from '../../../../../lang.json';
 
 interface Props {
     database: ServerDatabase;
@@ -40,8 +41,8 @@ export default ({ database, className }: Props) => {
 
     const schema = object().shape({
         confirm: string()
-            .required('The database name must be provided.')
-            .oneOf([database.name.split('_', 2)[1], database.name], 'The database name must be provided.'),
+            .required(`${lang.the_db_name_must_be_provided}`)
+            .oneOf([database.name.split('_', 2)[1], database.name ], `${lang.the_db_name_must_be_provided}`),
     });
 
     const submit = (values: { confirm: string }, { setSubmitting }: FormikHelpers<{ confirm: string }>) => {
@@ -62,66 +63,65 @@ export default ({ database, className }: Props) => {
         <>
             <Formik onSubmit={submit} initialValues={{ confirm: '' }} validationSchema={schema} isInitialValid={false}>
                 {({ isSubmitting, isValid, resetForm }) => (
-                    <Modal
-                        visible={visible}
-                        dismissable={!isSubmitting}
-                        showSpinnerOverlay={isSubmitting}
-                        onDismissed={() => {
-                            setVisible(false);
-                            resetForm();
-                        }}
-                    >
-                        <FlashMessageRender byKey={'database:delete'} css={tw`mb-6`} />
-                        <h2 css={tw`text-2xl mb-6`}>Confirm database deletion</h2>
-                        <p css={tw`text-sm`}>
-                            Deleting a database is a permanent action, it cannot be undone. This will permanently delete
-                            the <strong>{database.name}</strong> database and remove all associated data.
-                        </p>
-                        <Form css={tw`m-0 mt-6`}>
-                            <Field
-                                type={'text'}
-                                id={'confirm_name'}
-                                name={'confirm'}
-                                label={'Confirm Database Name'}
-                                description={'Enter the database name to confirm deletion.'}
-                            />
-                            <div css={tw`mt-6 text-right`}>
-                                <Button type={'button'} isSecondary css={tw`mr-2`} onClick={() => setVisible(false)}>
-                                    Cancel
-                                </Button>
-                                <Button type={'submit'} color={'red'} disabled={!isValid}>
-                                    Delete Database
-                                </Button>
-                            </div>
-                        </Form>
-                    </Modal>
+                        <Modal
+                            visible={visible}
+                            dismissable={!isSubmitting}
+                            showSpinnerOverlay={isSubmitting}
+                            onDismissed={() => {
+                                setVisible(false);
+                                resetForm();
+                            }}
+                        >
+                            <FlashMessageRender byKey={'database:delete'} css={tw`mb-6`} />
+                            <h2 css={tw`text-2xl mb-6`}>{lang.confirm_db_deletion}</h2>
+                            <p css={tw`text-sm`}>
+                                {lang.delet_db_perm_action_no_undone_sad_day} <strong>{database.name}</strong> {lang.db_and_remove_ass_data}
+                            </p>
+                            <Form css={tw`m-0 mt-6`}>
+                                <Field
+                                    type={'text'}
+                                    id={'confirm_name'}
+                                    name={'confirm'}
+                                    label={lang.confirm_db_name}
+                                    description={lang.enter_db_name_to_confirm_deletion}
+                                />
+                                <div css={tw`mt-6 text-right`}>
+                                    <Button type={'button'} isSecondary css={tw`mr-2`} onClick={() => setVisible(false)}>
+                                        {lang.cancel}
+                                    </Button>
+                                    <Button type={'submit'} color={'red'} disabled={!isValid}>
+                                        {lang.delete_db}
+                                    </Button>
+                                </div>
+                            </Form>
+                        </Modal>
                 )}
             </Formik>
             <Modal visible={connectionVisible} onDismissed={() => setConnectionVisible(false)}>
                 <FlashMessageRender byKey={'database-connection-modal'} css={tw`mb-6`} />
-                <h3 css={tw`mb-6 text-2xl`}>Database connection details</h3>
+                <h3 css={tw`mb-6 text-2xl`}>{lang.db_conn_details}</h3>
                 <div>
-                    <Label>Endpoint</Label>
+                    <Label>{lang.endpoint}</Label>
                     <CopyOnClick text={database.connectionString}>
                         <Input type={'text'} readOnly value={database.connectionString} />
-                    </CopyOnClick>
+                        </CopyOnClick>
                 </div>
                 <div css={tw`mt-6`}>
-                    <Label>Connections from</Label>
+                    <Label>{lang.connections_from}</Label>
                     <Input type={'text'} readOnly value={database.allowConnectionsFrom} />
                 </div>
                 <div css={tw`mt-6`}>
-                    <Label>Username</Label>
+                    <Label>{lang.username}</Label>
                     <CopyOnClick text={database.username}>
                         <Input type={'text'} readOnly value={database.username} />
-                    </CopyOnClick>
+                        </CopyOnClick>
                 </div>
                 <Can action={'database.view_password'}>
                     <div css={tw`mt-6`}>
-                        <Label>Password</Label>
+                        <Label>{lang.password}</Label>
                         <CopyOnClick text={database.password}>
                             <Input type={'text'} readOnly value={database.password} />
-                        </CopyOnClick>
+                            </CopyOnClick>
                     </div>
                 </Can>
                 <div css={tw`mt-6`}>
@@ -135,7 +135,7 @@ export default ({ database, className }: Props) => {
                         <RotatePasswordButton databaseId={database.id} onUpdate={appendDatabase} />
                     </Can>
                     <Button isSecondary onClick={() => setConnectionVisible(false)}>
-                        Close
+                        {lang.close}
                     </Button>
                 </div>
             </Modal>
@@ -151,18 +151,18 @@ export default ({ database, className }: Props) => {
                 <div css={tw`ml-8 text-center hidden md:block`}>
                     <CopyOnClick text={database.connectionString}>
                         <p css={tw`text-sm`}>{database.connectionString}</p>
-                    </CopyOnClick>
-                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>Endpoint</p>
+                        </CopyOnClick>
+                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>{lang.endpoint}</p>
                 </div>
                 <div css={tw`ml-8 text-center hidden md:block`}>
                     <p css={tw`text-sm`}>{database.allowConnectionsFrom}</p>
-                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>Connections from</p>
+                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>{lang.connections_from}</p>
                 </div>
                 <div css={tw`ml-8 text-center hidden md:block`}>
                     <CopyOnClick text={database.username}>
                         <p css={tw`text-sm`}>{database.username}</p>
-                    </CopyOnClick>
-                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>Username</p>
+                        </CopyOnClick>
+                    <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>{lang.username}</p>
                 </div>
                 <div css={tw`ml-8`}>
                     <Button isSecondary css={tw`mr-2`} onClick={() => setConnectionVisible(true)}>

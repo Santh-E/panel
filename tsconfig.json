@@ -10,6 +10,7 @@
     ],
     "strict": true,
     "noEmit": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,

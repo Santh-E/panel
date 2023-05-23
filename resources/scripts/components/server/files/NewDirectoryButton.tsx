@@ -15,13 +15,14 @@ import FlashMessageRender from '@/components/FlashMessageRender';
 import { Dialog, DialogWrapperContext } from '@/components/elements/dialog';
 import Code from '@/components/elements/Code';
 import asDialog from '@/hoc/asDialog';
+import lang from '../../../../../lang.json';
 
 interface Values {
     directoryName: string;
 }
 
 const schema = object().shape({
-    directoryName: string().required('A valid directory name must be provided.'),
+    directoryName: string().required(lang.a_valid_dir_name_must_be_provided),
 });
 
 const generateDirectoryData = (name: string): FileObject => ({
@@ -103,7 +104,7 @@ export default ({ className }: WithClassname) => {
         <>
             <NewDirectoryDialog open={open} onClose={setOpen.bind(this, false)} />
             <Button.Text onClick={setOpen.bind(this, true)} className={className}>
-                Create Directory
+            {lang.create_directory}
             </Button.Text>
         </>
     );

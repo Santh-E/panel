@@ -7,6 +7,7 @@ import { httpErrorToHuman } from '@/api/http';
 import { Button } from '@/components/elements/button/index';
 import { Dialog } from '@/components/elements/dialog';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
+import lang from '../../../../../lang.json';
 
 interface Props {
     scheduleId: number;
@@ -41,19 +42,19 @@ export default ({ scheduleId, onDeleted }: Props) => {
             <Dialog.Confirm
                 open={visible}
                 onClose={() => setVisible(false)}
-                title={'Delete Schedule'}
-                confirm={'Delete'}
+                title={lang.schedule_delete}
+                confirm={lang.schedule_yes_delete}
                 onConfirmed={onDelete}
             >
                 <SpinnerOverlay visible={isLoading} />
-                All tasks will be removed and any running processes will be terminated.
+                {lang.schedule_are_you_sure_delete}
             </Dialog.Confirm>
             <Button.Danger
                 variant={Button.Variants.Secondary}
                 className={'flex-1 sm:flex-none mr-4 border-transparent'}
                 onClick={() => setVisible(true)}
             >
-                Delete
+                {lang.delete}
             </Button.Danger>
         </>
     );

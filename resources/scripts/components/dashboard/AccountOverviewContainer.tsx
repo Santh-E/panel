@@ -9,6 +9,7 @@ import { breakpoint } from '@/theme';
 import styled from 'styled-components/macro';
 import MessageBox from '@/components/MessageBox';
 import { useLocation } from 'react-router-dom';
+import lang from '../../../../lang.json';
 
 const Container = styled.div`
     ${tw`flex flex-wrap`};
@@ -17,12 +18,12 @@ const Container = styled.div`
         ${tw`w-full`};
 
         ${breakpoint('sm')`
-      width: calc(50% - 1rem);
-    `}
+            width: calc(50% - 1rem);
+        `}
 
         ${breakpoint('md')`
-      ${tw`w-auto flex-1`};
-    `}
+            ${tw`w-auto flex-1`};
+        `}
     }
 `;
 
@@ -30,11 +31,11 @@ export default () => {
     const { state } = useLocation<undefined | { twoFactorRedirect?: boolean }>();
 
     return (
-        <PageContentBlock title={'Account Overview'}>
+        <PageContentBlock title={lang.account_overview}>
             {state?.twoFactorRedirect && (
-                <MessageBox title={'2-Factor Required'} type={'error'}>
-                    Your account must have two-factor authentication enabled in order to continue.
-                </MessageBox>
+            <MessageBox title={lang.factorrequired} type={'error'}>
+                {lang.your_account_must_have_twofa}
+            </MessageBox>
             )}
 
             <Container css={[tw`lg:grid lg:grid-cols-3 mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10`]}>

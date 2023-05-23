@@ -69,42 +69,42 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
             onSubmit={onSubmit}
             initialValues={{ username: '', password: '' }}
             validationSchema={object().shape({
-                username: string().required('A username or email must be provided.'),
-                password: string().required('Please enter your account password.'),
+                username: string().required(`${lang.pls_give_username}`),
+                password: string().required(`${lang.pls_enter_pass}`),
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer title={'Login to Continue'} css={tw`w-full flex`}>
-                    <Field light type={'text'} label={'Username or Email'} name={'username'} disabled={isSubmitting} />
+                <LoginFormContainer title={lang.login_to_continue} css={tw`w-full flex`}>
+                    <Field light type={'text'} label={lang.username_or_email} name={'username'} disabled={isSubmitting} />
                     <div css={tw`mt-6`}>
-                        <Field light type={'password'} label={'Password'} name={'password'} disabled={isSubmitting} />
+                        <Field light type={'password'} label={lang.password} name={'password'} disabled={isSubmitting} />
                     </div>
                     <div css={tw`mt-6`}>
                         <Button type={'submit'} size={'xlarge'} isLoading={isSubmitting} disabled={isSubmitting}>
-                            Login
+                            {lang.login}
                         </Button>
                     </div>
                     {recaptchaEnabled && (
-                        <Reaptcha
-                            ref={ref}
-                            size={'invisible'}
-                            sitekey={siteKey || '_invalid_key'}
+                    <Reaptcha
+                        ref={ref}
+                        size={'invisible'}
+                        sitekey={siteKey || '_invalid_key'}
                             onVerify={(response) => {
-                                setToken(response);
-                                submitForm();
-                            }}
-                            onExpire={() => {
-                                setSubmitting(false);
-                                setToken('');
-                            }}
-                        />
+                            setToken(response);
+                            submitForm();
+                        }}
+                        onExpire={() => {
+                            setSubmitting(false);
+                            setToken('');
+                        }}
+                    />
                     )}
                     <div css={tw`mt-6 text-center`}>
                         <Link
                             to={'/auth/password'}
                             css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
                         >
-                            Forgot password?
+                            {lang.forgot_password}
                         </Link>
                     </div>
                 </LoginFormContainer>

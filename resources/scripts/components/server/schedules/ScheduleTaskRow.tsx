@@ -20,6 +20,7 @@ import { ServerContext } from '@/state/server';
 import tw from 'twin.macro';
 import ConfirmationModal from '@/components/elements/ConfirmationModal';
 import Icon from '@/components/elements/Icon';
+import lang from '../../../../../lang.json';
 
 interface Props {
     schedule: Schedule;
@@ -29,13 +30,13 @@ interface Props {
 const getActionDetails = (action: string): [string, any] => {
     switch (action) {
         case 'command':
-            return ['Send Command', faCode];
+            return [ lang.send_command, faCode];
         case 'power':
-            return ['Send Power Action', faToggleOn];
+            return [ lang.send_power_action, faToggleOn];
         case 'backup':
-            return ['Create Backup', faFileArchive];
+            return [ lang.create_backup, faFileArchive];
         default:
-            return ['Unknown Action', faCode];
+            return [ lang.unknown_action, faCode];
     }
 };
 
@@ -76,13 +77,13 @@ export default ({ schedule, task }: Props) => {
                 onModalDismissed={() => setIsEditing(false)}
             />
             <ConfirmationModal
-                title={'Confirm task deletion'}
-                buttonText={'Delete Task'}
+                title={lang.confirm_task_deletion}
+                buttonText={lang.delete_task}
                 onConfirmed={onConfirmDeletion}
                 visible={visible}
                 onModalDismissed={() => setVisible(false)}
             >
-                Are you sure you want to delete this task? This action cannot be undone.
+                {lang.u_sure_u_wanna_delet_this_task}
             </ConfirmationModal>
             <FontAwesomeIcon icon={icon} css={tw`text-lg text-white hidden md:block`} />
             <div css={tw`flex-none sm:flex-1 w-full sm:w-auto overflow-x-auto`}>
@@ -90,7 +91,7 @@ export default ({ schedule, task }: Props) => {
                 {task.payload && (
                     <div css={tw`md:ml-6 mt-2`}>
                         {task.action === 'backup' && (
-                            <p css={tw`text-xs uppercase text-neutral-400 mb-1`}>Ignoring files & folders:</p>
+                            <p css={tw`text-xs uppercase text-neutral-400 mb-1`}>{lang.ignoring_files_and_folders}</p>
                         )}
                         <div
                             css={tw`font-mono bg-neutral-800 rounded py-1 px-2 text-sm w-auto inline-block whitespace-pre-wrap break-all`}
@@ -105,7 +106,7 @@ export default ({ schedule, task }: Props) => {
                     <div css={tw`mr-6`}>
                         <div css={tw`flex items-center px-2 py-1 bg-yellow-500 text-yellow-800 text-sm rounded-full`}>
                             <Icon icon={faArrowCircleDown} css={tw`w-3 h-3 mr-2`} />
-                            Continues on Failure
+                            {lang.continue_on_failure}
                         </div>
                     </div>
                 )}
@@ -113,7 +114,7 @@ export default ({ schedule, task }: Props) => {
                     <div css={tw`mr-6`}>
                         <div css={tw`flex items-center px-2 py-1 bg-neutral-500 text-sm rounded-full`}>
                             <Icon icon={faClock} css={tw`w-3 h-3 mr-2`} />
-                            {task.timeOffset}s later
+                            {task.timeOffset}s {lang.later}
                         </div>
                     </div>
                 )}

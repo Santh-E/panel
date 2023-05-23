@@ -5,6 +5,7 @@ import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
 import tw from 'twin.macro';
 import ScheduleCronRow from '@/components/server/schedules/ScheduleCronRow';
+import lang from '../../../../../lang.json';
 
 export default ({ schedule }: { schedule: Schedule }) => (
     <>
@@ -24,7 +25,7 @@ export default ({ schedule }: { schedule: Schedule }) => (
                     schedule.isActive ? tw`bg-green-600` : tw`bg-neutral-400`,
                 ]}
             >
-                {schedule.isActive ? 'Active' : 'Inactive'}
+                {schedule.isActive ? lang.active : lang.inactive}
             </p>
         </div>
         <ScheduleCronRow cron={schedule.cron} css={tw`mx-auto sm:mx-8 w-full sm:w-auto mt-4 sm:mt-0`} />
@@ -35,7 +36,11 @@ export default ({ schedule }: { schedule: Schedule }) => (
                     schedule.isActive && !schedule.isProcessing ? tw`bg-green-600` : tw`bg-neutral-400`,
                 ]}
             >
-                {schedule.isProcessing ? 'Processing' : schedule.isActive ? 'Active' : 'Inactive'}
+                {schedule.isProcessing ?
+                    lang.processing
+                    :
+                    schedule.isActive ? lang.active : lang.inactive
+                }
             </p>
         </div>
     </>

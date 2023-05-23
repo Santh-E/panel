@@ -12,6 +12,7 @@ import tw from 'twin.macro';
 import Fade from '@/components/elements/Fade';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import { useDeepMemoize } from '@/plugins/useDeepMemoize';
+import lang from '../../../../../lang.json';
 
 export default () => {
     const uuid = ServerContext.useStoreState((state) => state.server.data!.uuid);
@@ -54,18 +55,17 @@ export default () => {
                             ))
                         ) : (
                             <p css={tw`text-center text-sm text-neutral-300`}>
-                                {databaseLimit > 0
-                                    ? 'It looks like you have no databases.'
-                                    : 'Databases cannot be created for this server.'}
+                                {databaseLimit > 0 
+                                ? `${lang.looks_like_no_dbs}`
+                                : `${lang.dbs_cant_be_created}`}
                             </p>
                         )}
                         <Can action={'database.create'}>
                             <div css={tw`mt-6 flex items-center justify-end`}>
                                 {databaseLimit > 0 && databases.length > 0 && (
-                                    <p css={tw`text-sm text-neutral-300 mb-4 sm:mr-6 sm:mb-0`}>
-                                        {databases.length} of {databaseLimit} databases have been allocated to this
-                                        server.
-                                    </p>
+                                <p css={tw`text-sm text-neutral-300 mb-4 sm:mr-6 sm:mb-0`}>
+                                    {databases.length} {lang.of} {databaseLimit} {lang.dbs_have_been_allocated}
+                                </p>
                                 )}
                                 {databaseLimit > 0 && databaseLimit !== databases.length && (
                                     <CreateDatabaseButton css={tw`flex justify-end mt-6`} />
